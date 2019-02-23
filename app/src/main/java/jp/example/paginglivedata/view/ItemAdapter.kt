@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.util.DiffUtil
 import android.widget.Toast
 import com.bumptech.glide.Glide
-import android.support.annotation.NonNull
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.arch.paging.PagedListAdapter

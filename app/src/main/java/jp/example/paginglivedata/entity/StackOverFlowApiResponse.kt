@@ -20,7 +20,7 @@ data class Item(
 )
 
 data class StackApiResponse(
-    var items: List<Item>?,
+    var items: List<Item>,
     var has_more: Boolean,
     var quota_max: Int,
     var quota_remaining: Int
