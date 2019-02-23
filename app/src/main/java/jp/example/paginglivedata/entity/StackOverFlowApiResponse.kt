@@ -10,7 +10,7 @@ data class Owner(
 )
 
 data class Item(
-    var owner: Owner?,
+    var owner: Owner,
     var is_accepted: Boolean,
     var score: Int,
     var last_activity_date: Long,

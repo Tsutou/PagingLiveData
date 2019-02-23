@@ -1,5 +1,6 @@
 package jp.example.paginglivedata.view
 
+import android.arch.paging.PagedList
 import android.widget.TextView
 import android.support.v7.widget.RecyclerView
 import android.support.v7.util.DiffUtil
@@ -27,9 +28,9 @@ internal class ItemAdapter constructor(private val mCtx: Context) :
         val item = getItem(position)
 
         if (item != null) {
-            holder.textView.text = item.owner?.display_name
+            holder.textView.text = item.owner.display_name
             Glide.with(mCtx)
-                .load(item.owner?.profile_image)
+                .load(item.owner.profile_image)
                 .into(holder.imageView)
         } else {
             Toast.makeText(mCtx, "Item is null", Toast.LENGTH_LONG).show()
@@ -43,6 +44,11 @@ internal class ItemAdapter constructor(private val mCtx: Context) :
 
     }
 
+    override fun submitList(pagedList: PagedList<Item>) {
+        super.submitList(pagedList)
+        notifyDataSetChanged()
+    }
+
     companion object {
 
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Item>() {
@@ -51,7 +57,7 @@ internal class ItemAdapter constructor(private val mCtx: Context) :
             }
 
             override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean {
-                return oldItem == newItem
+                return oldItem.equals(newItem)
             }
         }
     }
