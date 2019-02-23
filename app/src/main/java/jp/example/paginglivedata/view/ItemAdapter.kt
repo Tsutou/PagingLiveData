@@ -1,6 +1,5 @@
 package jp.example.paginglivedata.view
 
-import android.arch.paging.PagedList
 import android.widget.TextView
 import android.support.v7.widget.RecyclerView
 import android.support.v7.util.DiffUtil
@@ -10,21 +9,29 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.arch.paging.PagedListAdapter
 import android.content.Context
+import android.databinding.DataBindingUtil
 import android.view.View
 import android.widget.ImageView
 import jp.example.paginglivedata.R
+import jp.example.paginglivedata.databinding.RecyclerViewUsersBinding
 import jp.example.paginglivedata.entity.Item
+import kotlinx.android.synthetic.main.recycler_view_users.view.*
 
-
-internal class ItemAdapter constructor(private val mCtx: Context) :
+class ItemAdapter constructor(private val mCtx: Context) :
     PagedListAdapter<Item, ItemAdapter.ItemViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        val view = LayoutInflater.from(mCtx).inflate(R.layout.recycler_view_users, parent, false)
-        return ItemViewHolder(view)
+        val binding =
+            DataBindingUtil.inflate(
+                LayoutInflater.from(parent.context),
+                R.layout.recycler_view_users,
+                parent,
+                false) as RecyclerViewUsersBinding
+        return ItemViewHolder(binding.root)
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
+
         val item = getItem(position)
 
         if (item != null) {
@@ -37,16 +44,9 @@ internal class ItemAdapter constructor(private val mCtx: Context) :
         }
     }
 
-    internal inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        var textView: TextView = itemView.findViewById(R.id.textViewName)
-        var imageView: ImageView = itemView.findViewById(R.id.imageView)
-
-    }
-
-    override fun submitList(pagedList: PagedList<Item>) {
-        super.submitList(pagedList)
-        notifyDataSetChanged()
+    inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var textView: TextView = itemView.textViewName
+        var imageView: ImageView = itemView.imageView
     }
 
     companion object {
@@ -57,7 +57,7 @@ internal class ItemAdapter constructor(private val mCtx: Context) :
             }
 
             override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean {
-                return oldItem.equals(newItem)
+                return oldItem == newItem
             }
         }
     }
