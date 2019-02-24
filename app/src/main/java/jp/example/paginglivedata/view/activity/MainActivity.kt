@@ -18,16 +18,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
-        recyclerview.layoutManager = LinearLayoutManager(this)
-        recyclerview.setHasFixedSize(true)
+        val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+        binding.recyclerview.layoutManager = LinearLayoutManager(this)
+        binding.recyclerview.setHasFixedSize(true)
 
         //getting our ItemViewModel
         val itemViewModel =
             ViewModelProviders
-                .of(this,
-                    ItemViewModel.Factory(application = application)
-                ).get(ItemViewModel::class.java)
+                .of(this,ItemViewModel.Factory(application = application)).get(ItemViewModel::class.java)
 
         //creating the Adapter
         val adapter = ItemAdapter(this)

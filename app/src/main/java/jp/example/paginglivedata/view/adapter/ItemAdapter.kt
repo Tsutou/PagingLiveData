@@ -10,12 +10,12 @@ import android.view.ViewGroup
 import android.arch.paging.PagedListAdapter
 import android.content.Context
 import android.databinding.DataBindingUtil
+import android.databinding.ViewDataBinding
 import android.view.View
-import android.widget.ImageView
+import com.android.databinding.library.baseAdapters.BR
 import jp.example.paginglivedata.R
-import jp.example.paginglivedata.databinding.RecyclerViewUsersBinding
 import jp.example.paginglivedata.data.entity.Item
-import kotlinx.android.synthetic.main.recycler_view_users.view.*
+import jp.example.paginglivedata.databinding.RecyclerViewUsersBinding
 
 class ItemAdapter constructor(private val mCtx: Context) :
     PagedListAdapter<Item, ItemAdapter.ItemViewHolder>(DIFF_CALLBACK) {
@@ -34,19 +34,17 @@ class ItemAdapter constructor(private val mCtx: Context) :
 
         val item = getItem(position)
 
-        if (item != null) {
-            holder.textView.text = item.owner.display_name
-            Glide.with(mCtx)
-                .load(item.owner.profile_image)
-                .into(holder.imageView)
+        if(item != null && holder.binding != null) {
+            holder.binding.setVariable(BR.item, item)
+            holder.binding.executePendingBindings()
         } else {
             Toast.makeText(mCtx, "Item is null", Toast.LENGTH_LONG).show()
         }
     }
 
     inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var textView: TextView = itemView.textViewName
-        var imageView: ImageView = itemView.imageView
+        val view: View = itemView
+        val binding: ViewDataBinding? = DataBindingUtil.bind(itemView)
     }
 
     companion object {

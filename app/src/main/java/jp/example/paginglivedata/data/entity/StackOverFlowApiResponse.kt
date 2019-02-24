@@ -10,18 +10,18 @@ data class Owner(
 )
 
 data class Item(
-    var owner: Owner,
-    var is_accepted: Boolean,
-    var score: Int,
-    var last_activity_date: Long,
-    var creation_date: Long,
-    var answer_id: Long,
-    var question_id: Long
+    val owner: Owner,
+    val is_accepted: Boolean,
+    val score: Int,
+    val last_activity_date: Long,
+    val creation_date: Long,
+    val answer_id: Long,
+    val question_id: Long
 )
 
 data class StackApiResponse(
-    var items: List<Item>,
-    var has_more: Boolean,
-    var quota_max: Int,
-    var quota_remaining: Int
+    val items: List<Item>,
+    val has_more: Boolean,
+    val quota_max: Int,
+    val quota_remaining: Int
 )
