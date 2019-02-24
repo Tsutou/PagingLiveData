@@ -1,4 +1,4 @@
-package jp.example.paginglivedata.view
+package jp.example.paginglivedata.view.adapter
 
 import android.widget.TextView
 import android.support.v7.widget.RecyclerView

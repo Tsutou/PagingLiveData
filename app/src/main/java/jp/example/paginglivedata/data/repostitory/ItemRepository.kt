@@ -1,11 +1,8 @@
 package jp.example.paginglivedata.data.repostitory
 
-import android.arch.paging.PageKeyedDataSource
-import jp.example.paginglivedata.data.entity.Item
+import jp.example.paginglivedata.PAGE_SIZE
+import jp.example.paginglivedata.SITE_NAME
 import jp.example.paginglivedata.data.entity.StackApiResponse
-import jp.example.paginglivedata.data.paging.FIRST_PAGE
-import jp.example.paginglivedata.data.paging.PAGE_SIZE
-import jp.example.paginglivedata.data.paging.SITE_NAME
 import jp.example.paginglivedata.data.service.RetrofitClient
 import retrofit2.Call
 import retrofit2.Callback

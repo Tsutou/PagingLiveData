@@ -1,6 +1,5 @@
-package jp.example.paginglivedata
+package jp.example.paginglivedata.view.activity
 
-import android.app.Activity
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import jp.example.paginglivedata.viewModel.ItemViewModel
@@ -8,8 +7,9 @@ import android.arch.lifecycle.ViewModelProviders
 import android.support.v7.widget.LinearLayoutManager
 import android.arch.lifecycle.Observer
 import android.databinding.DataBindingUtil
+import jp.example.paginglivedata.R
 import jp.example.paginglivedata.databinding.ActivityMainBinding
-import jp.example.paginglivedata.view.ItemAdapter
+import jp.example.paginglivedata.view.adapter.ItemAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -17,7 +17,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        DataBindingUtil.setContentView<ActivityMainBinding>(this,R.layout.activity_main)
+
+        DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
         recyclerview.layoutManager = LinearLayoutManager(this)
         recyclerview.setHasFixedSize(true)
 
