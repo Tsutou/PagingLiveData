@@ -1,10 +1,8 @@
 package jp.example.paginglivedata.view.adapter
 
-import android.widget.TextView
 import android.support.v7.widget.RecyclerView
 import android.support.v7.util.DiffUtil
 import android.widget.Toast
-import com.bumptech.glide.Glide
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.arch.paging.PagedListAdapter
@@ -17,9 +15,16 @@ import jp.example.paginglivedata.R
 import jp.example.paginglivedata.data.entity.Item
 import jp.example.paginglivedata.databinding.RecyclerViewUsersBinding
 
-class ItemAdapter constructor(private val mCtx: Context) :
+/**
+ * PagedListAdapterを継承したAdapter
+ * RecyclerView.Adapterとの違いはDiffUtilのコールバックを持っている
+ */
+class ItemAdapter constructor(private val context: Context) :
     PagedListAdapter<Item, ItemAdapter.ItemViewHolder>(DIFF_CALLBACK) {
 
+    /**
+     * DataBinding可能なViewHolderを生成
+     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val binding =
             DataBindingUtil.inflate(
@@ -30,6 +35,9 @@ class ItemAdapter constructor(private val mCtx: Context) :
         return ItemViewHolder(binding.root)
     }
 
+    /**
+     * 各アイテムをViewHolderにバインドする
+     */
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
 
         val item = getItem(position)
@@ -38,10 +46,13 @@ class ItemAdapter constructor(private val mCtx: Context) :
             holder.binding.setVariable(BR.item, item)
             holder.binding.executePendingBindings()
         } else {
-            Toast.makeText(mCtx, "Item is null", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Item is null", Toast.LENGTH_LONG).show()
         }
     }
 
+    /**
+     * ViewHolderクラス
+     */
     inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val view: View = itemView
         val binding: ViewDataBinding? = DataBindingUtil.bind(itemView)
@@ -49,6 +60,9 @@ class ItemAdapter constructor(private val mCtx: Context) :
 
     companion object {
 
+        /**
+         * DiffUtilのコールバック
+         */
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Item>() {
             override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean {
                 return oldItem.question_id == newItem.question_id

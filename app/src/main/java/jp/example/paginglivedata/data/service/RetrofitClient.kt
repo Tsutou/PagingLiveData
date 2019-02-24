@@ -4,7 +4,9 @@ import jp.example.paginglivedata.BASE_URL
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.Retrofit
 
-
+/**
+ * Retrofit シングルトンインスタンスファクトリ
+ */
 class RetrofitClient private constructor() {
 
     private val retrofit: Retrofit = Retrofit.Builder()

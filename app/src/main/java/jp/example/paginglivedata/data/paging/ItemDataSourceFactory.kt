@@ -6,20 +6,24 @@ import android.arch.paging.DataSource
 import jp.example.paginglivedata.data.entity.Item
 
 
+/**
+ *　データソース用のファクトリクラス (itemLiveDataSource :MutableLiveDataのFactory)
+ */
 class ItemDataSourceFactory : DataSource.Factory<Int, Item>() {
 
-    //creating the mutable live data
-    //getter for itemlivedatasource
     val itemLiveDataSource = MutableLiveData<PageKeyedDataSource<Int, Item>>()
 
     override fun create(): DataSource<Int, Item> {
-        //getting our data source object
+        /**
+         * 初期化
+         */
         val itemDataSource = ItemDataSource()
 
-        //posting the datasource to get the values
+        /**
+         * データをポストする
+         */
         itemLiveDataSource.postValue(itemDataSource)
 
-        //returning the datasource
         return itemDataSource
     }
 }

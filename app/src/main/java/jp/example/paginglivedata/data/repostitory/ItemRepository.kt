@@ -8,13 +8,22 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+/**
+ * APIデータ永続化リポジトリ
+ */
 class ItemRepository {
 
-    fun getItems(firstPageIndex: Int,pagingCallback: (StackApiResponse) -> Unit) {
+    fun getItems(firstPageIndex: Int, pagingCallback: (StackApiResponse) -> Unit) {
 
+        /**
+         * Retrofit Factoryからシングルトンでインスタンスを取得
+         */
         RetrofitClient.instance
             .api.getAnswers(firstPageIndex, PAGE_SIZE, SITE_NAME)
             .enqueue(object : Callback<StackApiResponse> {
+                /**
+                 * 成功時、各Pagingフェーズのコールバックを受け取る
+                 */
                 override fun onResponse(call: Call<StackApiResponse>, response: Response<StackApiResponse>) {
 
                     val data = response.body()

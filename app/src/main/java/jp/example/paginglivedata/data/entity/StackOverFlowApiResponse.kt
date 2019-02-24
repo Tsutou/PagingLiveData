@@ -1,5 +1,8 @@
 package jp.example.paginglivedata.data.entity
 
+/**
+ * Owner Object
+ */
 data class Owner(
     val reputation: Int,
     val user_id: Long,
@@ -9,6 +12,9 @@ data class Owner(
     val link: String
 )
 
+/**
+ * Item Object
+ */
 data class Item(
     val owner: Owner,
     val is_accepted: Boolean,
@@ -19,6 +25,12 @@ data class Item(
     val question_id: Long
 )
 
+/**
+ * StackApiResponse Object
+ * 全体をラップするルートオブジェクト
+ * @property items Paging対象のitemのコレクション
+ * @property has_more 次のページがあるかどうか判定するフラグ
+ */
 data class StackApiResponse(
     val items: List<Item>,
     val has_more: Boolean,

@@ -12,24 +12,35 @@ import android.arch.paging.LivePagedListBuilder
 import jp.example.paginglivedata.PAGE_SIZE
 import jp.example.paginglivedata.data.paging.ItemDataSourceFactory
 
+/**
+ * PagedList<Item> のLiveDataを持つ ViewModel
+ */
 class ItemViewModel(application: Application) : AndroidViewModel(application) {
 
     var itemPagedList: LiveData<PagedList<Item>>? = null
     var liveDataSource: LiveData<PageKeyedDataSource<Int, Item>>? = null
 
     init {
-        //getting our data source factory
+        /**
+         * Data Source Factoryを作成
+         */
         val itemDataSourceFactory = ItemDataSourceFactory()
 
-        //getting the live data source from data source factory
+        /**
+         * Data Source Factoryから、PageKeyedDataSource(LiveData)を取得
+         */
         liveDataSource = itemDataSourceFactory.itemLiveDataSource
 
-        //Getting PagedList config
+        /**
+         * PageListConfigを取得
+         */
         val pagedListConfig = PagedList.Config.Builder()
             .setEnablePlaceholders(false)
             .setPageSize(PAGE_SIZE).build()
 
-        //Building the paged list
+        /**
+         * 与えられたDataSource.Factoryと PagedList.ConfigをもとにLiveData<PagedList>を生成する
+         */
         itemPagedList = LivePagedListBuilder(itemDataSourceFactory, pagedListConfig)
             .build()
     }

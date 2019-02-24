@@ -7,10 +7,12 @@ import android.arch.lifecycle.ViewModelProviders
 import android.support.v7.widget.LinearLayoutManager
 import android.arch.lifecycle.Observer
 import android.databinding.DataBindingUtil
+import android.os.Handler
 import jp.example.paginglivedata.R
 import jp.example.paginglivedata.databinding.ActivityMainBinding
 import jp.example.paginglivedata.view.adapter.ItemAdapter
 import kotlinx.android.synthetic.main.activity_main.*
+import timber.log.Timber
 
 
 class MainActivity : AppCompatActivity() {
@@ -21,32 +23,58 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        /**
+         * Timberの初期化
+         */
+        Timber.plant(Timber.DebugTree())
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.recyclerview.layoutManager = LinearLayoutManager(this)
         binding.recyclerview.setHasFixedSize(true)
 
-        //getting our ItemViewModel
+        /**
+         * ロード開始
+         */
+        binding.isLoading = true
+
+        /**
+         * viewModelFactoryでViewModelインスタンス生成
+         */
         val itemViewModel =
             ViewModelProviders
                 .of(this,ItemViewModel.Factory(application = application)).get(ItemViewModel::class.java)
 
-        //creating the Adapter
+        /**
+         * PagedListAdapterを継承したrecyclerView用のAdapter
+         */
         adapter = ItemAdapter(this)
 
+        /**
+         * viewModelのObserve開始
+         */
         observeViewModel(itemViewModel)
 
-        //setting the adapter
         recyclerview.adapter = adapter
     }
 
     private fun observeViewModel(itemViewModel: ItemViewModel) {
-        //observing the itemPagedList from view model
+        /**
+         * <PagedList<Item>>のObserve開始
+         */
         itemViewModel.itemPagedList?.removeObservers(this)
         itemViewModel.itemPagedList?.observe(this, Observer { items ->
-            //in case of any changes
-            //submitting the items to adapter
+
             if (items != null) {
+                /**
+                 * AdapterへItemのアップデートを通知
+                 */
                 adapter.submitList(items)
+                /**
+                 * 少し待ってロード
+                 */
+                Handler().postDelayed({
+                    binding.isLoading = false
+                },2000)
             }
         })
     }
