@@ -15,10 +15,13 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    lateinit var binding: ActivityMainBinding
+    lateinit var adapter: ItemAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.recyclerview.layoutManager = LinearLayoutManager(this)
         binding.recyclerview.setHasFixedSize(true)
 
@@ -28,20 +31,24 @@ class MainActivity : AppCompatActivity() {
                 .of(this,ItemViewModel.Factory(application = application)).get(ItemViewModel::class.java)
 
         //creating the Adapter
-        val adapter = ItemAdapter(this)
+        adapter = ItemAdapter(this)
 
-        //observing the itemPagedList from view model
-        itemViewModel.itemPagedList?.removeObservers(this)
-        itemViewModel.itemPagedList?.observe(this, Observer { items->
-            //in case of any changes
-            //submitting the items to adapter
-            if(items != null) {
-                adapter.submitList(items)
-            }
-        })
+        observeViewModel(itemViewModel)
 
         //setting the adapter
         recyclerview.adapter = adapter
+    }
+
+    private fun observeViewModel(itemViewModel: ItemViewModel) {
+        //observing the itemPagedList from view model
+        itemViewModel.itemPagedList?.removeObservers(this)
+        itemViewModel.itemPagedList?.observe(this, Observer { items ->
+            //in case of any changes
+            //submitting the items to adapter
+            if (items != null) {
+                adapter.submitList(items)
+            }
+        })
     }
 
 }
