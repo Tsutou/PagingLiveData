@@ -6,11 +6,11 @@ import android.arch.lifecycle.ViewModel
 import android.arch.paging.PagedList
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModelProvider
-import jp.example.paginglivedata.entity.Item
+import jp.example.paginglivedata.data.entity.Item
 import android.arch.paging.PageKeyedDataSource
 import android.arch.paging.LivePagedListBuilder
-import jp.example.paginglivedata.entity.paging.ItemDataSourceFactory
-import jp.example.paginglivedata.entity.paging.PAGE_SIZE
+import jp.example.paginglivedata.data.paging.ItemDataSourceFactory
+import jp.example.paginglivedata.data.paging.PAGE_SIZE
 
 class ItemViewModel(application: Application) : AndroidViewModel(application) {
 

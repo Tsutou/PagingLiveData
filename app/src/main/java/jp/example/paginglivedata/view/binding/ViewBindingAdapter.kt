@@ -1,4 +1,4 @@
-package jp.example.paginglivedata.binding
+package jp.example.paginglivedata.view.binding
 
 import android.databinding.BindingAdapter
 import android.view.View

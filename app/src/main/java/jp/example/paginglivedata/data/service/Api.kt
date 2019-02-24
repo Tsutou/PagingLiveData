@@ -1,6 +1,6 @@
-package jp.example.paginglivedata.service
+package jp.example.paginglivedata.data.service
 
-import jp.example.paginglivedata.entity.StackApiResponse
+import jp.example.paginglivedata.data.entity.StackApiResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

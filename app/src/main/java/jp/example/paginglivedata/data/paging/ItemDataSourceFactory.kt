@@ -1,9 +1,9 @@
-package jp.example.paginglivedata.entity.paging
+package jp.example.paginglivedata.data.paging
 
 import android.arch.paging.PageKeyedDataSource
 import android.arch.lifecycle.MutableLiveData
 import android.arch.paging.DataSource
-import jp.example.paginglivedata.entity.Item
+import jp.example.paginglivedata.data.entity.Item
 
 
 class ItemDataSourceFactory : DataSource.Factory<Int, Item>() {

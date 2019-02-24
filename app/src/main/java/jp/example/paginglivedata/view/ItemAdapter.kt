@@ -14,7 +14,7 @@ import android.view.View
 import android.widget.ImageView
 import jp.example.paginglivedata.R
 import jp.example.paginglivedata.databinding.RecyclerViewUsersBinding
-import jp.example.paginglivedata.entity.Item
+import jp.example.paginglivedata.data.entity.Item
 import kotlinx.android.synthetic.main.recycler_view_users.view.*
 
 class ItemAdapter constructor(private val mCtx: Context) :

@@ -1,4 +1,4 @@
-package jp.example.paginglivedata.service
+package jp.example.paginglivedata.data.service
 
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.Retrofit

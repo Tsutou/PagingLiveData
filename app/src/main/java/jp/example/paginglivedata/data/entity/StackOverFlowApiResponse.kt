@@ -1,4 +1,4 @@
-package jp.example.paginglivedata.entity
+package jp.example.paginglivedata.data.entity
 
 data class Owner(
     val reputation: Int,
