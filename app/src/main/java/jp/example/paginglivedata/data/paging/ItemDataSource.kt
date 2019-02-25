@@ -26,7 +26,7 @@ class ItemDataSource : PageKeyedDataSource<Int, Item>() {
         /**
          * 最初にロードする処理(First Pageを取得)
          */
-        callApi(FIRST_PAGE) { data ->
+        fetchData(FIRST_PAGE) { data ->
             callback.onResult(data.items, null, FIRST_PAGE + 1)
             Timber.d("loadInitial:itemSize=${data.items.size}, currentPageKey=${FIRST_PAGE}, nextPageKey=${FIRST_PAGE + 1}")
         }
@@ -40,7 +40,7 @@ class ItemDataSource : PageKeyedDataSource<Int, Item>() {
         /**
          * 前のページをロードする処理 今回は使っていない
          */
-        callApi(params.key) { data ->
+        fetchData(params.key) { data ->
             val adjacentKey = if (params.key > 1) params.key - 1 else null
             callback.onResult(data.items, adjacentKey)
             Timber.d("loadBefore:itemSize=${data.items.size}, currentPageKey=${params.key}, nextPageKey=$adjacentKey")
@@ -56,7 +56,7 @@ class ItemDataSource : PageKeyedDataSource<Int, Item>() {
          * 次のページをロードする処理
          * 初期化時、loadInitial後に前もって1度行われ、ページを最後までスクロールするたびに呼ばれる
          */
-        callApi(params.key) { data ->
+        fetchData(params.key) { data ->
             val key = if (data.has_more) params.key + 1 else null
             callback.onResult(data.items, key)
             Timber.d("loadAfter:itemSize=${data.items.size}, currentPageKey=${params.key}, nextPageKey=$key,hasMoreData=${data.has_more}")
@@ -64,7 +64,7 @@ class ItemDataSource : PageKeyedDataSource<Int, Item>() {
         }
     }
 
-    private fun callApi(firstPageIndex: Int, pagingCallback: (StackApiResponse) -> Unit) {
+    private fun fetchData(firstPageIndex: Int, pagingCallback: (StackApiResponse) -> Unit) {
 
         /**
          * Retrofit Factoryからシングルトンでインスタンスを取得
